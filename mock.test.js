@@ -1,8 +1,25 @@
+const getUserName = require('./user')
+const axios = require('axios')
+
+// axios.get.mockImplementation(() => {
+//     return Promise.resolve({ data: { username: 'gaoxiang' } })
+// })
+// axios.get.mockReturnValue(Promise.resolve({ data: { username: 'gaoxiang' } }))
+
 function mockTest(shouldCall, cb) {
     if (shouldCall) {
         cb(42)
     }
 }
+
+jest.mock('axios')
+it('test with mock modules', () => {
+    return getUserName(1).then(name => {
+        console.log(name);
+        expect(axios.get).toHaveBeenCalled()
+        expect(axios.get).toHaveBeenCalledTimes(1)
+    })
+})
 
 it('test with mock function', () => {
     const mockCb = jest.fn()
